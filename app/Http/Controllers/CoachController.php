@@ -39,7 +39,7 @@ class CoachController extends Controller
     public function bookSeat(Request $request)
     {
         $seat = $request->seat_count;
-        if($seat > 7 && is_numeric($seat)){
+        if ($seat > 7 && is_numeric($seat)) {
             return response(['message' => 'Please enter less than 7']);
         }
         $rowSeats = Coach::query()
@@ -65,7 +65,7 @@ class CoachController extends Controller
         if (count($seats) < $seat) {
             $message = "There is no such seats available";
         } else {
-            $seats = array_slice((array)$seats, 0, $seat);
+            $seats = array_slice((array) $seats, 0, $seat);
             Coach::query()->whereIn('id', $seats)->update(['is_reserved' => 1]);
         }
         return response(['seats' => $seats, 'message' => $message]);
@@ -82,7 +82,7 @@ class CoachController extends Controller
                 if (count($resetArray) < $required && isset($rowSeat[$i + 1]) && $rowSeat[$i] + 1 != $rowSeat[$i + 1]) {
                     $resetArray = [];
                 }
-                if(count($resetArray) == $required){
+                if (count($resetArray) == $required) {
                     break;
                 }
             }
@@ -108,7 +108,7 @@ class CoachController extends Controller
 
     public function resetSeats(Request $request, Coach $coach)
     {
-        $seats = $request->count ?? 10;
+        $seats = $request->reset_count ?? 10;
         $arr = range(1, 80);
         shuffle($arr);
         $seats = array_chunk($arr, $seats);
