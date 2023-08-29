@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coach;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CoachController extends Controller
 {
 
+    /**
+     * @param Coach $coach
+     * @return Application|ResponseFactory|\Illuminate\Foundation\Application|Response
+     */
     public function getCoach(Coach $coach)
     {
         $coaches = $coach::query()
@@ -36,6 +43,10 @@ class CoachController extends Controller
         return response($preparedData);
     }
 
+    /**
+     * @param Request $request
+     * @return Application|ResponseFactory|\Illuminate\Foundation\Application|Response
+     */
     public function bookSeat(Request $request)
     {
         $seat = $request->seat_count;
@@ -71,6 +82,11 @@ class CoachController extends Controller
         return response(['seats' => $seats, 'message' => $message]);
     }
 
+    /**
+     * @param $seats
+     * @param $required
+     * @return array
+     */
     public function findConsecutiveSeats($seats, $required): array
     {
         $resetArray = [];
@@ -93,6 +109,11 @@ class CoachController extends Controller
         return $resetArray;
     }
 
+    /**
+     * @param $seats
+     * @param $required
+     * @return array
+     */
     public function findNearestSeats($seats, $required): array
     {
         $prepareSeats = [];
@@ -106,6 +127,11 @@ class CoachController extends Controller
         return [];
     }
 
+    /**
+     * @param Request $request
+     * @param Coach $coach
+     * @return Application|ResponseFactory|\Illuminate\Foundation\Application|Response
+     */
     public function resetSeats(Request $request, Coach $coach)
     {
         $seats = $request->reset_count ?? 10;
