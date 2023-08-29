@@ -106,11 +106,12 @@ class CoachController extends Controller
         return [];
     }
 
-    public function resetSeats(Coach $coach)
+    public function resetSeats(Request $request, Coach $coach)
     {
+        $seats = $request->count ?? 10;
         $arr = range(1, 80);
         shuffle($arr);
-        $seats = array_chunk($arr, 10);
+        $seats = array_chunk($arr, $seats);
         $seats = $seats[0];
         $coach::query()->where('is_reserved', '=', 1)->update(['is_reserved' => 0]);
         $coach::query()->whereIn('id', $seats)->update(['is_reserved' => 1]);
