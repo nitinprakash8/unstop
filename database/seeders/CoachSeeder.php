@@ -17,7 +17,7 @@ class CoachSeeder extends Seeder
         $seats = 80;
         $seatInRows = 7;
         $rows = $seats / $seatInRows;
-        $rows = $rows > (int)$rows ? (int)$rows + 1 : $rows - 1;
+        $rows = $rows > (int) $rows ? (int) $rows + 1 : $rows - 1;
         $seatSet = 1;
         for ($coach = 1; $coach <= $coaches; $coach++) {
             for ($row = 1; $row <= $rows; $row++) {
@@ -28,7 +28,7 @@ class CoachSeeder extends Seeder
                         'seat_number' => $seatSet,
                         'is_reserved' => false
                     ]);
-                    if($seatSet == $seats){
+                    if ($seatSet == $seats) {
                         break;
                     }
                     $seatSet++;
